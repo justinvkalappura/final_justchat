@@ -159,4 +159,4 @@ LOGOUT_REDIRECT_URL = 'index'
 
 LOGIN_URL = 'login'
 
-CSRF_TRUSTED_ORIGINS = ['https://justchat1.azurewebsites.net/']
+CSRF_TRUSTED_ORIGINS = ['https://justchat1.azurewebsites.net']
