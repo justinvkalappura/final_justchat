@@ -1,0 +1,254 @@
+{% extends "profileapp/layout.html" %}
+
+{% load static %}
+
+{% block head %}
+ <!-- <link rel="stylesheet" href="{% static 'chats/bootstrap3.3/css/bootstrap.min.css' %}"
+      xmlns="http://www.w3.org/1999/html"> -->
+  <link rel="stylesheet" href="{% static 'chats/chat.css' %}">
+  
+{% endblock head %}
+
+{% block body %}
+
+  {% if u_id == user.id %}
+      <div id="app" class="app" style="margin-left: 350px; width: 1000px;height: 695px;">
+        <section id="main-right" class="main-right" style="width: 670px;height: 690px;">
+            <center>
+            <img style="border-radius: 100%;height: 300px;width:300px;margin-top: 120px;" src="{% static 'profileapp/Images/logo1.jpg' %}" alt="Italian Trulli">
+            <br><br>
+            <h5>&nbsp;Search..Chat..Done</h5>
+            </center>  
+        </section>
+      </div>
+  {% else %}
+   <div id="app" class="app" style="margin-left: 350px; width: 1000px;height: 695px;">
+
+    <!-- RIGHT SECTION -->
+
+    <section id="main-right" class="main-right" style="width: 670px;height: 690px;">
+      <!-- header -->
+      <div id="header-right" class="header-right">
+        <!-- profile pict -->
+        <div id="header-img" class="profile header-img" >
+          <img src="{{pic.url}}" alt="">
+        </div>
+
+        <!-- name -->
+        <h4 class="name friend-name" style="margin-left:0px;">{{fname_value}} {{lname_value}}</h4>
+
+        <!-- some btn -->
+        <div class="some-btn">
+<!--          <span class="glyphicon glyphicon-facetime-video"></span>-->
+<!--          <span class="glyphicon glyphicon-earphone"></span>-->
+<!--          <span class="glyphicon glyphicon-option-vertical option-btn"></span>-->
+        </div>
+      </div>
+
+      <!-- chat area -->
+      <div id="chat-area" class="chat-area">
+        <!-- chat content -->
+        {% for message in messages %}
+
+        <!-- FRIENDS CHAT TEMPLATE -->
+        {% if message.sender != user %}
+
+        <div id="friends-chat" class="friends-chat">
+          <div class="profile friends-chat-photo">
+            <img src="{{pic.url}}" alt="">
+          </div>
+          <div class="friends-chat-content">
+<!--            <p class="friends-chat-name">Mario Gomez</p>-->
+            <p class="friends-chat-balloon">{{ message.message }}</p>
+            <h5 class="chat-datetime">{{ message.timestamp }}</h5>
+          </div>
+        </div>
+
+        {% else %}
+        <!-- YOUR CHAT TEMPLATE -->
+        <div id="your-chat" class="your-chat">
+          <p class="your-chat-balloon">{{ message.message }}</p>
+          <p class="chat-datetime"><span class="glyphicon glyphicon-ok"></span>{{ message.timestamp }}</p>
+        </div>
+        {% endif %}
+
+        {% endfor %}
+
+      </div>
+
+        <!-- typing area -->
+    <form method="POST" action="{% url 'send_message' recipient.id %}">
+    {% csrf_token %}
+    <div id="typing-area" class="typing-area">
+        <!-- input form -->
+        <table class="table">
+            <thead>
+             <tr style="height: 20px;">
+        <th scope="col">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-emoji-smile" viewBox="0 0 16 16">
+                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                <path d="M4.285 9.567a.5.5 0 0 1 .683.183A3.498 3.498 0 0 0 8 11.5a3.498 3.498 0 0 0 3.032-1.75.5.5 0 1 1 .866.5A4.498 4.498 0 0 1 8 12.5a4.498 4.498 0 0 1-3.898-2.25.5.5 0 0 1 .183-.683zM7 6.5C7 7.328 6.552 8 6 8s-1-.672-1-1.5S5.448 5 6 5s1 .672 1 1.5zm4 0c0 .828-.448 1.5-1 1.5s-1-.672-1-1.5S9.448 5 10 5s1 .672 1 1.5z"/>
+            </svg>
+        </th>
+        <th scope="col">
+            <input id="type-area" style="width: 530px;" class="type-area" name="message" placeholder="Type a message....">
+        </th>
+        <th scope="col">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-mic-fill" viewBox="0 0 16 16">
+            <path d="M5 3a3 3 0 0 1 6 0v5a3 3 0 0 1-6 0V3z"/>
+            <path d="M3.5 6.5A.5.5 0 0 1 4 7v1a4 4 0 0 0 8 0V7a.5.5 0 0 1 1 0v1a5 5 0 0 1-4.5 4.975V15h3a.5.5 0 0 1 0 1h-7a.5.5 0 0 1 0-1h3v-2.025A5 5 0 0 1 3 8V7a.5.5 0 0 1 .5-.5z"/>
+          </svg>
+          </th>
+    </tr> 
+</thead>
+</table>
+        <!-- attachment btn -->
+        <div class="attach-btn">
+            <i class="bi bi-emoji-smile"></i>
+        </div>
+        <!-- send btn -->
+        <button><span class="glyphicon glyphicon-send send-btn"></span></button>
+    </div>
+    </form>
+
+   
+
+<script>
+const recognition = new window.webkitSpeechRecognition();
+recognition.continuous = true;
+recognition.interimResults = true;
+recognition.lang = 'ml-IN'; // set the language to Malayalam
+const inputField = document.querySelector('#type-area');
+
+document.querySelector('.attach-btn').addEventListener('click', () => {
+  recognition.start();
+});
+
+recognition.onresult = (event) => {
+  const resultIndex = event.resultIndex;
+  const transcript = event.results[resultIndex][0].transcript;
+  inputField.value = transcript;
+  translateToEnglish(transcript);
+};
+
+function translateToEnglish(text) {
+  fetch('/translate', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-CSRFToken': '{{ csrf_token }}'
+    },
+    body: JSON.stringify({
+      text: text
+    })
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.success) {
+      inputField.value = data.translation;
+      document.querySelector('form').submit(); // submit the form automatically
+    } else {
+      console.log('Translation failed');
+    }
+  })
+  .catch(error => console.error(error));
+}
+
+$(document).ready(function() {
+    setInterval(function() {
+        $('#chat-area').load(location.href + '#chat-area');
+    }, 2000);
+});
+
+</script>
+    </section>
+
+</div>
+
+{% endif %}
+
+{% endblock body %}
+
+{% block side %}
+
+<div id="app" class="app" style="margin-left: 60px; width: 700px;height: 695px;">
+
+    <!-- LEFT SECTION -->
+
+    <section id="main-left" class="main-right" style="width: 437px;height: 690px;">
+        <!-- header -->
+       
+
+        <div class="row" style="background-color: white; margin: 5px; padding: 10px;">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-md-2">
+                        <img src="{{user.profile_pic.url}}" alt="" class="img-fluid rounded">
+                    </div>
+                     <div class="col-md-10 p-2">
+                        <h4 class="name friend-name">{{user.first_name}} {{user.last_name}}</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <form method="GET" action="{% url 'search' recipient.id %}" id="search-form">
+                    {% csrf_token %}    
+                    <div class="search-div" >
+                       <table class="table">
+                          <thead>
+                           <tr style="height: 20px;">
+                            <th scope="col">
+                                <svg width="1em" height="1.6em" viewBox="0 0 16 6" class="bi bi-search" fill="#6d7e8c" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
+                                    <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
+                                </svg>
+                            </th>
+                            <th scope="col">
+                                <input type="text" name="query" id="search-box" placeholder="Search Justchat">
+                            </th>
+                           </tr> 
+                          </thead>
+                        </table>
+                    </div>
+                </form>
+            </div>
+        </div>
+  
+        {% block sidee %}
+
+        <!-- chat list -->
+        <div id="chat-list" class="chat-list">
+          <!-- user lists -->
+          {% for conversation in conversations %}
+  
+          <a href="{% url 'chat' conversation.sender.id %}"><div id="friends" class="friends">
+            <!-- photo -->
+            <div class="profile friends-photo">
+              <img src="{{ conversation.sender.profile_pic.url }}" alt="">
+            </div>
+  
+            <div class="friends-credent">
+              <!-- name -->
+              <span class="name friend-name" style="margin-left:0px;">{{ conversation.sender.first_name }} {{ conversation.sender.last_name }}</span>
+              <!-- last message -->
+              <span class="friends-message">{{ conversation.message }}</span>
+            </div>
+            <!-- notification badge -->
+  <!--          <span class="badge notif-badge">7</span>-->
+          </div></a>
+  
+          {% endfor %}
+  
+        </div>
+   
+        {% endblock sidee %}
+        <!-- self-profile -->
+        
+      </section>
+
+  </div>
+    <!-- jQuey, Popper, BootstrapJS -->
+    <script src="{% static 'chats/bootstrap3.3/js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'chats/bootstrap3.3/js/bootstrap.min.js' %}"></script>
+
+{% endblock side %}

@@ -1,0 +1,48 @@
+{% extends 'profileapp/index.html' %}
+
+  {% block search %}
+  <div class="space" style="background-color: white;"></div>
+    {% if user.is_authenticated %}
+        <div class="suggestion-box">
+           <div class="row"> 
+            {% for s in key1 %}
+            <div class="col-lg-4">
+                <div class="card mb-4">
+                    <div class="card-body text-center">
+                    <div>
+                        <center>
+                        <a href="{% url 'profile' s.username %}">
+                            <div class="small-profilepic" style="background-image: url(/media/{{s.profile_pic}});width: 100px;height: 100px;border-radius: 50%;"></div>
+                        </a>
+                        </center>
+                    </div>
+                    <div class="my-3">
+                        <a href="{% url 'profile' s.username %}">
+                            <div id="user-name">
+                                <strong>
+                                    {{s.first_name}} {{s.last_name}}
+                                </strong>
+                            </div>
+                            <div class="grey">@{{s.username}}</div>
+                        </a>
+                    </div>
+                    <!-- <div class="d-flex justify-content-center mb-2">
+                        <button class="btn btn-outline-success" type="button" onclick="follow_user(this,'{{s.username}}','suggestion')">Follow</button>
+                    </div>
+                    <div class="d-flex justify-content-center mb-2">
+                        <button class="btn btn-outline-success" type="button" onclick="follow_user(this,'{{s.username}}','suggestion')">Message</button>
+                    </div> -->
+                 </div>
+               </div>
+            </div>
+            {% empty %}
+                <div style="text-align: center; border-bottom: .5px solid #e6ecf0; padding: 10px 15px;">
+                    <span class="grey" style="font-size: .9em;">No search result!!!</span>
+                </div>
+            {% endfor %} 
+        </div>
+      </div>
+    {% endif %}
+
+    
+{% endblock search %}
