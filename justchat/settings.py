@@ -80,11 +80,11 @@ ASGI_APPLICATION = 'justchat.routing.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'justchat',
+        'NAME': 'railway',
         'USER': 'postgres',
-        'PASSWORD': '1234',
-        'HOST': 'localhost',
-        'PORT': '9000',
+        'PASSWORD': 'm6YARgGZZfFkGfwBKWzZ',
+        'HOST': 'containers-us-west-91.railway.app',
+        'PORT': '5965',
     }
 }
 
