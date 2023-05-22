@@ -160,3 +160,8 @@ LOGOUT_REDIRECT_URL = 'index'
 LOGIN_URL = 'login'
 
 CSRF_TRUSTED_ORIGINS = ['https://justchat1.azurewebsites.net']
+
+
+RECAPTCHA_PUBLIC_KEY = '6LdhqysmAAAAAC-1-Xs6V6H5jCRzOfLBOaLbC-y2'
+RECAPTCHA_PRIVATE_KEY = '6LdhqysmAAAAAPdcEHoxtjkIO8cSX_H81kGHFr9h'
+SILENCED_SYSTEM_CHECKS = ['captcha.recaptcha_test_key_error']
