@@ -4,8 +4,10 @@ from django.utils import timezone
 
 
 class User(AbstractUser):
-    profile_pic = models.ImageField(upload_to='profile_pic/')
-    cover = models.ImageField(upload_to='covers/', blank=True)
+    # profile_pic = models.ImageField(upload_to='profile_pic/')
+    profile_pic = CloudinaryField(blank=True, null=True)
+    # cover = models.ImageField(upload_to='covers/', blank=True)
+    cover = CloudinaryField(blank=True, null=True)
     phone = models.IntegerField(null=True)
     gender = models.TextField(blank=False, null=True)
     country = models.TextField(blank=False, null=True)
@@ -26,7 +28,8 @@ class Post(models.Model):
     creater = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posts')
     date_created = models.DateTimeField(default=timezone.now)
     content_text = models.TextField(max_length=140, blank=True)
-    content_image = models.ImageField(upload_to='./media/posts/', blank=True)
+    # content_image = models.ImageField(upload_to='./media/posts/', blank=True)
+    content_image = CloudinaryField(blank=True, null=True)
     likers = models.ManyToManyField(User,blank=True , related_name='likes')
     savers = models.ManyToManyField(User,blank=True , related_name='saved')
     comment_count = models.IntegerField(default=0)
