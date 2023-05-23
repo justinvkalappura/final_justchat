@@ -2,6 +2,8 @@
 
 {% load static %}
 
+{% load cloudinary %}
+
 {% block head %}  
 
 <style>
@@ -46,10 +48,11 @@
 
 {% block profile %}
     <div class="profile-view" data-user="{{username.username}}">
-        <div class="cover-image" style="background-image: url(/media/{{username.cover}})"></div>
-        <div class="profile-image" style="background-image: url(/media/{{username.profile_pic}})"></div>
+        <div class="cover-image" style="background-image: url({{username.cover.url}})"></div>
+        <div class="profile-image" style="background-image: url({{username.profile_pic.url}})"></div>
         <div class="profile-details">
             <div>
+                
                 {% if user.username == username.username %}
 
                   <div class="dropdown" style="float:right;margin-left: 520px;">
