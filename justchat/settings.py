@@ -166,9 +166,3 @@ RECAPTCHA_PUBLIC_KEY = '6LdT0SsmAAAAAFJ9wOcsq6IYKnJJhyj8bBis1PlE'
 RECAPTCHA_PRIVATE_KEY = '6LdT0SsmAAAAAD22VGIea5ujYb7GQ5BX5h92Ol74'
 SILENCED_SYSTEM_CHECKS = ['captcha.recaptcha_test_key_error']
 
-cloudinary.config(
-  cloud_name = "dxfhwxvjk",
-  api_key = "696892431612481",
-  api_secret = "RLF1ZSrFk4DPysOA_qeEMA4PcR4",
-  secure = True
-)
