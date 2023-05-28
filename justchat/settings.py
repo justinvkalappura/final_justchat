@@ -34,7 +34,6 @@ INSTALLED_APPS = [
     'chat',
     'channels',
     'profileapp',
-    'cloudinary',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
