@@ -18,7 +18,6 @@ ENV DJANGO_SETTINGS_MODULE=justchat.settings
 # Expose the port that Django runs on
 # ENV PYTHONPATH=/justchat
 
-EXPOSE 8000
 
 # Set the entry point command
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+CMD ["python", "manage.py", "runserver", "0.0.0.0:80"]
