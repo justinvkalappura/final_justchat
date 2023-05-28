@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 import os
+import cloudinary
 from cloudinary.uploader import upload
 from cloudinary.utils import cloudinary_url
 from pathlib import Path
@@ -172,5 +173,4 @@ cloudinary.config(
   cloud_name = "dxfhwxvjk",
   api_key = "696892431612481",
   api_secret = "RLF1ZSrFk4DPysOA_qeEMA4PcR4",
-  secure = true
 )
