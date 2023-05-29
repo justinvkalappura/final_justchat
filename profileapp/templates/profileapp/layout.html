@@ -289,7 +289,7 @@
                         <div class="suggestion-user">
                             <div>
                                 <a href="{% url 'profile' suggestion.username %}">
-                                    <div class="small-profilepic" style="background-image: url(/media/{{suggestion.profile_pic}})"></div>
+                                    <div class="small-profilepic" style="background-image: url({{suggestion.profile_pic.url}})"></div>
                                 </a>
                             </div>
                             <div class="user-details">
