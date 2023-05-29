@@ -11,9 +11,10 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 import os
+import cloudinary.api
 import cloudinary
-from cloudinary.uploader import upload
-from cloudinary.utils import cloudinary_url
+from cloudinary.uploader
+from cloudinary.utils
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -162,7 +163,7 @@ LOGOUT_REDIRECT_URL = 'index'
 
 LOGIN_URL = 'login'
 
-CSRF_TRUSTED_ORIGINS = ['https://justchat1.azurewebsites.net']
+CSRF_TRUSTED_ORIGINS = ['https://justchat1.azurewebsites.net','https://www.freeforu.in']
 
 
 RECAPTCHA_PUBLIC_KEY = '6LdT0SsmAAAAAFJ9wOcsq6IYKnJJhyj8bBis1PlE'
