@@ -13,8 +13,8 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 import os
 import cloudinary.api
 import cloudinary
-from cloudinary.uploader
-from cloudinary.utils
+from cloudinary.uploader import upload
+from cloudinary.utils import cloudinary_url
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
