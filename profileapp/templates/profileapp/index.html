@@ -46,7 +46,7 @@
                                 <div>
                                     <div>
                                         <a href="{% url 'profile' post.creater.username %}">
-                                            <div class="small-profilepic" style="background-image: url(/media/{{post.creater.profile_pic}})"></div>
+                                            <div class="small-profilepic" style="background-image: url({{post.creater.profile_pic.url}})"></div>
                                         </a>
                                     </div>
                                     <div style="flex: 1">
@@ -93,7 +93,7 @@
                                         {% endif %}
                                         {% if post.content_image %}
                                         
-                                            <div class="post-image" style="background-image: {{post.content_image.url}};"></div>
+                                            <div class="post-image" style="background-image: url({{post.content_image.url}})"></div>
                                         {% else %}
                                             <div class="post-image" style="display: none;"></div>
                                         {% endif %}

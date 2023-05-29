@@ -48,12 +48,8 @@
 
 {% block profile %}
     <div class="profile-view" data-user="{{username.username}}">
-        <div class="cover-image">
-            <img src="{{cover.url}}" alt="">
-        </div>
-        <div class="profile-image">
-            <img src="{{profile_pic.url}}" alt="">
-        </div>
+        <div class="cover-image" style="background-image: url({{username.cover.url}})"></div>
+        <div class="profile-image" style="background-image: url({{username.profile_pic.url}})"></div>
         <div class="profile-details">
             <div>
                 
@@ -70,7 +66,7 @@
                 {% elif is_follower %} 
                     
                     <div class="row">
-                        <a href="{% url 'chat' s.id %}"><button class="btn btn-outline-success" style="margin-left: 500px;" type="button" onclick="follow_user(this,'{{s.username}}','suggestion')">Message</button></a>
+                        <a href="{% url 'chat' user.id %}"><button class="btn btn-outline-success" style="margin-left: 500px;" type="button" onclick="follow_user(this,'{{s.username}}','suggestion')">Message</button></a>
                     &nbsp;
                     <div>
                         <button class="btn btn-success float-right" onclick="unfollow_user(this,'{{username.username}}','edit_page')" id="following-btn">Following</button>
@@ -81,7 +77,7 @@
                     {% else %}
                     
                     <div class="row">
-                        <a href="{% url 'chat' s.id %}"><button class="btn btn-outline-success" style="margin-left: 500px;" type="button" onclick="follow_user(this,'{{s.username}}','suggestion')">Message</button></a>
+                        <a href="{% url 'chat' user.id %}"><button class="btn btn-outline-success" style="margin-left: 500px;" type="button" onclick="follow_user(this,'{{s.username}}','suggestion')">Message</button></a>
                     &nbsp;
                     <div>
                     <button class="btn btn-outline-success float-right" onclick="follow_user(this,'{{username.username}}','edit_page')" id="follow-btn">Follow</button>

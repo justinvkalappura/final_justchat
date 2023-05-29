@@ -12,7 +12,7 @@
                     <div>
                         <center>
                         <a href="{% url 'profile' s.username %}">
-                            <div class="small-profilepic" style="background-image: url(/media/{{s.profile_pic}});width: 100px;height: 100px;border-radius: 50%;"></div>
+                            <div class="small-profilepic" style="background-image: url({{s.profile_pic.url}});width: 100px;height: 100px;border-radius: 50%;"></div>
                         </a>
                         </center>
                     </div>
