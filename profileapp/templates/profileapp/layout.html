@@ -14,12 +14,13 @@
         <script type="text/javascript">
             (function(d, m){
                 var kommunicateSettings = 
-                    {"appId":"3d60565ac148deb3b809a320a4d1400bb","popupWidget":true,"automaticChatOpenOnNavigation":true};
+                    {"appId":"1395cbdaed47d13b47282cc4e8c019d8a","popupWidget":true,"automaticChatOpenOnNavigation":true};
                 var s = document.createElement("script"); s.type = "text/javascript"; s.async = true;
                 s.src = "https://widget.kommunicate.io/v2/kommunicate.app";
                 var h = document.getElementsByTagName("head")[0]; h.appendChild(s);
                 window.kommunicate = m; m._globals = kommunicateSettings;
             })(document, window.kommunicate || {});
+        /* NOTE : Use web server to view HTML files as real-time update will not work if you directly open the HTML file in the browser. */
         </script>
         
         {% block head %}
@@ -279,55 +280,87 @@
                 <div class='right-div-content'>
                     <div class="space" style="background-color: white;"></div>
                     {% if user.is_authenticated %}
-                        <div class="suggestion-box">
-                            <div class="suggestion-header">
-                               You might know
+                    <div class="suggestion-box">
+                        <div class="suggestion-header">
+                            You might know
+                        </div>
+                        {% for suggestion in suggestions %}
+                        {% if forloop.counter <= 5 %}
+                        <div class="suggestion-user">
+                            <div>
+                                <a href="{% url 'profile' suggestion.username %}">
+                                    <div class="small-profilepic" style="background-image: url(/media/{{suggestion.profile_pic}})"></div>
+                                </a>
                             </div>
+                            <div class="user-details">
+                                <a href="{% url 'profile' suggestion.username %}">
+                                    <div id="user-name">
+                                        <strong>
+                                            {{suggestion.first_name}} {{suggestion.last_name}}
+                                        </strong>
+                                    </div>
+                                    <div class="grey">@{{suggestion.username}}</div>
+                                </a>
+                            </div>
+                            <div>
+                                <button class="btn btn-outline-success" type="button" onclick="follow_user(this,'{{suggestion.username}}','suggestion')">Follow</button>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% empty %}
+                        <div style="text-align: center; border-bottom: .5px solid #e6ecf0; padding: 10px 15px;">
+                            <span class="grey" style="font-size: .9em;">No suggestions available.</span>
+                        </div>
+                        {% endfor %}
+                        {% if suggestions|length > 5 %}
+                        <div class="suggestion-footer">
+                            <a href="#" id="show-more-link">Show more</a>
+                        </div>
+                        <div class="hidden-suggestions" style="display: none;">
                             {% for suggestion in suggestions %}
-                                <div class="suggestion-user">
-                                    <div>
-                                        <a href="{% url 'profile' suggestion.username %}">
-                                            <div class="small-profilepic" style="background-image: url({{suggestion.profile_pic.url}})"></div>
-                                        </a>
-                                    </div>
-                                    <div class="user-details">
-                                        <a href="{% url 'profile' suggestion.username %}">
-                                            <div id="user-name">
-                                                
-                                                <strong>
-                                                    {{suggestion.first_name}} {{suggestion.last_name}}
-                                                </strong>
-                                            </div>
-                                            <div class="grey">@{{suggestion.username}}</div>
-                                        </a>
-                                    </div>
-                                    <div>
-                                        <button class="btn btn-outline-success" type="button" onclick="follow_user(this,'{{suggestion.username}}','suggestion')">Follow</button>
-                                    </div>
+                            {% if forloop.counter > 5 %}
+                            <div class="suggestion-user">
+                                <div>
+                                    <a href="{% url 'profile' suggestion.username %}">
+                                        <div class="small-profilepic" style="background-image: url(/media/{{suggestion.profile_pic}})"></div>
+                                    </a>
                                 </div>
-                            {% empty %}
-                                    <div style="text-align: center; border-bottom: .5px solid #e6ecf0; padding: 10px 15px;">
-                                        <span class="grey" style="font-size: .9em;">No suggestions available.</span>
-                                    </div>
-                            {% endfor %}
-                            <div class="suggestion-footer">
-                                <a href="#">Show more</a>
+                                <div class="user-details">
+                                    <a href="{% url 'profile' suggestion.username %}">
+                                        <div id="user-name">
+                                            <strong>
+                                                {{suggestion.first_name}} {{suggestion.last_name}}
+                                            </strong>
+                                        </div>
+                                        <div class="grey">@{{suggestion.username}}</div>
+                                    </a>
+                                </div>
+                                <div>
+                                    <button class="btn btn-outline-success" type="button" onclick="follow_user(this,'{{suggestion.username}}','suggestion')">Follow</button>
+                                </div>
                             </div>
+                            {% endif %}
+                            {% endfor %}
                         </div>
+                        <div class="suggestion-footer hidden-suggestions-footer" style="display: none;">
+                            <a href="#" id="show-less-link">Show less</a>
+                        </div>
+                        {% endif %}
+                    </div>
                     {% else %}
-                        <div class="guest-box">
-                            <center>
-                                <div class="guest-header">
-                                    <h5>New to Network?</h5>
-                                </div>
-                                <div class="grey guest-content">
-                                    Sign up now to get connected with people you know.
-                                </div>
-                                <div class="guest-btn">
-                                    <button class="btn btn-success btn-block" type="button" onclick="goto_register()">Sign Up</button>
-                                </div>
-                            </center>
-                        </div>
+                    <div class="guest-box">
+                        <center>
+                            <div class="guest-header">
+                                <h5>New to Network?</h5>
+                            </div>
+                            <div class="grey guest-content">
+                                Sign up now to get connected with people you know.
+                            </div>
+                            <div class="guest-btn">
+                                <button class="btn btn-success btn-block" type="button" onclick="goto_register()">Sign Up</button>
+                            </div>
+                        </center>
+                    </div>
                     {% endif %}
                 </div>
             </div>
@@ -337,3 +370,25 @@
 
     </body>
 </html>
+
+<script>
+    var showMoreLink = document.getElementById('show-more-link');
+    var showLessLink = document.getElementById('show-less-link');
+    var hiddenSuggestions = document.getElementsByClassName('hidden-suggestions')[0];
+    var hiddenSuggestionsFooter = document.getElementsByClassName('hidden-suggestions-footer')[0];
+
+    function showMoreSuggestions() {
+        hiddenSuggestions.style.display = 'block';
+        hiddenSuggestionsFooter.style.display = 'block';
+        showMoreLink.style.display = 'none';
+    }
+
+    function showLessSuggestions() {
+        hiddenSuggestions.style.display = 'none';
+        hiddenSuggestionsFooter.style.display = 'none';
+        showMoreLink.style.display = 'block';
+    }
+
+    showMoreLink.addEventListener('click', showMoreSuggestions);
+    showLessLink.addEventListener('click', showLessSuggestions);
+</script>

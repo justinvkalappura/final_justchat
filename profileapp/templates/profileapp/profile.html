@@ -66,7 +66,7 @@
                 {% elif is_follower %} 
                     
                     <div class="row">
-                        <a href="{% url 'chat' user.id %}"><button class="btn btn-outline-success" style="margin-left: 500px;" type="button" onclick="follow_user(this,'{{s.username}}','suggestion')">Message</button></a>
+                        <a href="{% url 'chat' username.id %}"><button class="btn btn-outline-success" style="margin-left: 500px;" type="button" onclick="follow_user(this,'{{s.username}}','suggestion')">Message</button></a>
                     &nbsp;
                     <div>
                         <button class="btn btn-success float-right" onclick="unfollow_user(this,'{{username.username}}','edit_page')" id="following-btn">Following</button>
@@ -77,7 +77,7 @@
                     {% else %}
                     
                     <div class="row">
-                        <a href="{% url 'chat' user.id %}"><button class="btn btn-outline-success" style="margin-left: 500px;" type="button" onclick="follow_user(this,'{{s.username}}','suggestion')">Message</button></a>
+                        <a href="{% url 'chat' username.id %}"><button class="btn btn-outline-success" style="margin-left: 500px;" type="button" onclick="follow_user(this,'{{s.username}}','suggestion')">Message</button></a>
                     &nbsp;
                     <div>
                     <button class="btn btn-outline-success float-right" onclick="follow_user(this,'{{username.username}}','edit_page')" id="follow-btn">Follow</button>
