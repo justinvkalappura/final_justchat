@@ -48,8 +48,12 @@
 
 {% block profile %}
     <div class="profile-view" data-user="{{username.username}}">
-        <div class="cover-image" style="background-image: url({{username.cover.url}})"></div>
-        <div class="profile-image" style="background-image: url({{username.profile_pic.url}})"></div>
+        <div class="cover-image">
+            <img src="{{username.cover.url}}" alt="">
+        </div>
+        <div class="profile-image">
+            <img src="{{username.profile_pic.url}}" alt="">
+        </div>
         <div class="profile-details">
             <div>
                 
