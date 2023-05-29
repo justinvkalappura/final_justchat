@@ -76,6 +76,23 @@
 
       </div>
 
+
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+      <script>
+        $(document).ready(function() {
+          setInterval(function() {
+            $('#main-right').load(location.href + ' #main-right');
+          }, 2000);
+        });
+
+        $(document).ready(function() {
+          setInterval(function() {
+            $('#main-left').load(location.href + ' #main-left');
+          }, 2000);
+        });
+      </script>
+
+
         <!-- typing area -->
     <form method="POST" action="{% url 'send_message' recipient.id %}">
     {% csrf_token %}
